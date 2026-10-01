@@ -18,6 +18,9 @@
         char nombre_actividad[max_str];
         int tiempo_ms; // tiempo guardado como texto
         char dependencias[max_str];
+
+        // INICIALIZAR EL BOOL EN FALSE
+        bool estado_dependencias; // Esto nos servira para validar si una actividad puede ejecutarse o no, dependiendo de si sus dependencias han sido completadas
         /* data */
     } planificador;
     
@@ -51,6 +54,21 @@ int parseo_planificador_strtok(char *linea, planificador *p){
     
     
     return 1;
+}
+
+int validar_dependencias(planificador *p){
+
+    p->estado_dependencias = false; // Inicializamos el estado de dependencias como falso
+
+    strcpy(p->dependencias, p->dependencias); // Copiamos las dependencias a una variable temporal para no modificar el original
+
+    if(strcmp(p->dependencias, "") == 0) {
+        p->estado_dependencias = true; // No hay dependencias, se puede ejecutar
+        return 1;
+    }
+
+
+    return 0;
 }
 
 int main (int argc, char* argv[]) {
