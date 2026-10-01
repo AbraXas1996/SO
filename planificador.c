@@ -41,16 +41,17 @@ int parseo_planificador_strtok(char *linea, planificador *p){
     sscanf(token," %s", p->nombre_actividad);
 
     // lo mismo para el timepo (este es un int asiq le aplicamos atoi)
-    token = strtok(NULL, ":\n");
+    token = strtok(NULL, ":"); // tambien corta en los siguientes dos puntos, de esta forma aseguramos que si existen dependencias
     if(token==NULL) return 0;
     p->tiempo_ms = atoi(token); // convierte una cadena '500' a 500 
 
     // ahora para las dependencias
-    token = strtok(NULL, ":\n"); // No hay ":" al final de cada línea
+    token = strtok(NULL, "\n"); // No hay ":" al final de cada línea
     if(token!=NULL) //ya que podrían no haber dependencias
     {
     strncpy(p->dependencias, token, sizeof(p->dependencias)-1);
     p->dependencias[sizeof(p->dependencias)-1]='\0';}
+
     else{p->dependencias[0]='\0';} // si no hay dependencias, se asigna una cadena vacía
     p->estado_dependencias = false; // ninguna actividad se ha ejecutado por eso se inicializa en false, se cambiará a true cuando se ejecute la actividad
     return 1;
