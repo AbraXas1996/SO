@@ -66,7 +66,17 @@ int validar_dependencias(planificador *p){
         p->estado_dependencias = true; // No hay dependencias, se puede ejecutar
         return 1;
     }
+    else{ // hay dependencias, debemos verificar si se han completado
+        for(int i=0; i<total_actividades; i++){
+            if(strstr(p->dependencias, Actividades[i].id_actividad) != NULL) { // Si la dependencia está en la lista de actividades
+                if(Actividades[i].estado_dependencias == false) { // Si la actividad dependiente no se ha completado
+                    printf("\nERROR: La actividad %s depende de la actividad %s, la cual no se ha completado aún\n", p->id_actividad, Actividades[i].id_actividad);
+                    return 0; // No se puede ejecutar
+                }
+            }
+        }
 
+    }
 
     return 0;
 }
