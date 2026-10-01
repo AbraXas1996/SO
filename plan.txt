@@ -1,0 +1,16 @@
+1: prender_carbon: 500:
+2: comprar_carne: 1200:
+3: comprar_pan: 300:
+4: asar_longaniza: 800: 1,2
+5: armar_choripan: 250: 3,4
+6: comprar_bebida: 400:
+7: servir_bebida: 150: 6
+8: preparar_ensalada: 600:
+9: servir_mesa: 200: 5,7,8
+10: jugar_hollow_knight: 3000:
+11: asar_brisket: 4500: 1,2
+12: poner_musica: 100:
+13: bailar_cueca: 1500: 12
+14: comer_asado: 2000: 9,11
+15: jugar_elden_ring: 5000: 14
+16: tomar_siesta_reparadora: 8000: 14,15
