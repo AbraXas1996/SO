@@ -50,36 +50,31 @@ int parseo_planificador_strtok(char *linea, planificador *p){
     if(token!=NULL) //ya que podrían no haber dependencias
     {
     strncpy(p->dependencias, token, sizeof(p->dependencias)-1);
-    p->dependencias[sizeof(p->dependencias)-1]='\0';}; 
-    
-    
+    p->dependencias[sizeof(p->dependencias)-1]='\0';}
+    else{p->dependencias[0]='\0';} // si no hay dependencias, se asigna una cadena vacía
+    p->estado_dependencias = false; // ninguna actividad se ha ejecutado por eso se inicializa en false, se cambiará a true cuando se ejecute la actividad
     return 1;
 }
 
 int validar_dependencias(planificador *p){
 
-    p->estado_dependencias = false; // Inicializamos el estado de dependencias como falso
-
-    strcpy(p->dependencias, p->dependencias); // Copiamos las dependencias a una variable temporal para no modificar el original
-
     if(strcmp(p->dependencias, "") == 0) {
         p->estado_dependencias = true; // No hay dependencias, se puede ejecutar
         return 1;
     }
-    else{ // hay dependencias, debemos verificar si se han completado
+    // hay dependencias que buscar,se recorre las actividades
         for(int i=0; i<total_actividades; i++){
-            if(strstr(p->dependencias, Actividades[i].id_actividad) != NULL) { // Si la dependencia está en la lista de actividades
-                if(Actividades[i].estado_dependencias == false) { // Si la actividad dependiente no se ha completado
-                    printf("\nERROR: La actividad %s depende de la actividad %s, la cual no se ha completado aún\n", p->id_actividad, Actividades[i].id_actividad);
-                    return 0; // No se puede ejecutar
+          if(strcmp(p->dependencias, Actividades[i].id_actividad) == 0) // verificar que el id de la dependencia coincida con el id de alguna actividad
+            {
+                if(Actividades[i].estado_dependencias == false) // si la actividad dependiente no ha sido completada, no se puede ejecutar
+                {
+                    return 0;
                 }
             }
         }
-
+        p->estado_dependencias = true; // todas las dependencias han sido completadas, se puede ejecutar
+        return 1;
     }
-
-    return 0;
-}
 
 int main (int argc, char* argv[]) {
 
