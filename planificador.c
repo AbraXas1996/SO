@@ -56,6 +56,7 @@ int parseo_planificador_strtok(char *linea, planificador *p){
     return 1;
 }
 
+// FUNCION PARA VALIDAR DEPENDENCIAS, DEVUELVE 1 SI SE PUEDE EJECUTAR LA ACTIVIDAD Y 0 SI NO SE PUEDE EJECUTAR
 int validar_dependencias(planificador *p){
 
     if(strcmp(p->dependencias, "") == 0) {
