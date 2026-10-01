@@ -60,6 +60,13 @@ bool error_entrada = false;
 if (argc != 3) {
     printf("\nERROR: Se esperan 3 argumentos [./planificador, plan.txt, K] donde K es el límite de concurrencia\n");
     error_entrada = true;
+}
+else{
+    if(strcmp(argv[0], "./planificador") != 0 && strcmp(argv[0], "planificador") != 0) // usando strcmp para comparar strings
+    {
+        printf("\nERROR: Ha ingresado incorrectamente el primer argumento\nSe espera: ./planificador\n");
+        error_entrada = true;
+    };
 };
 
 if (argv[0] != "./planificador") {
