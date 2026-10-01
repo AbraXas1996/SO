@@ -26,7 +26,7 @@
     
     planificador Actividades[10000];
     int total_actividades = 0;
-    // Parseo de los datos
+    // Parseo de los datos (FUNCION)
 int parseo_planificador_strtok(char *linea, planificador *p){
     char *token;
 
@@ -78,6 +78,8 @@ int validar_dependencias(planificador *p){
     }
 
 int main (int argc, char* argv[]) {
+
+    // validar entrada de argumentos
 
 bool error_entrada = false;
 
@@ -131,6 +133,15 @@ if (error_entrada) return 1;
    fclose(fp);
    printf("\nSe han cargado %d actividades desde el archivo %s\n", total_actividades, argv[1]);
 
-    return 0;
+
+    // Ahora, se usara la funcion validar_dependencias para verificar si cada actividad puede ejecutarse o no.
+    for(int i=0; i<total_actividades; i++){
+        if(validar_dependencias(&Actividades[i])) // retorna 1 o true si se puede ejecutar, 0 o false si no se puede ejecutar
+        {
+            printf("\nLa actividad %s puede ejecutarse\n", Actividades[i].id_actividad);
+        } else {
+            printf("\nLa actividad %s NO puede ejecutarse, ya que depende de otra actividad que no ha sido completada\n", Actividades[i].id_actividad);
+        }
+    }
 
 }
